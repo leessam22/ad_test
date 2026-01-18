@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>시각형 학습 체험</title>
     <style>
-        /* 1. 모든 요소 크기 계산 방식 통일 */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         :root {
@@ -13,59 +12,55 @@
             --text-main: #1e293b;
         }
 
-        /* 2. 잘림 방지의 핵심: 중앙 정렬 해제 및 스크롤 허용 */
+        /* 1. 스크롤바 원천 차단 */
         html, body { 
-            min-height: 100%;
+            height: 100dvh; /* 기기 주소창 제외한 실제 높이 */
             margin: 0; 
             padding: 0; 
+            overflow: hidden; /* 스크롤바 절대 생성 금지 */
             background-color: #f8fafc;
-            /* 가로 스크롤은 막고 세로 스크롤은 내용이 넘칠 때만 허용 */
-            overflow-x: hidden;
-            overflow-y: auto; 
         }
 
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
-            /* 중앙 정렬(center) 대신 상단 정렬(flex-start) 사용 */
-            align-items: flex-start; 
-            /* 상단바/노치 영역 보호 및 하단 여백 확보 */
-            padding: env(safe-area-inset-top, 20px) 15px 60px 15px;
+            align-items: center; /* 화면 정중앙 배치 */
         }
 
         .page-container {
-            width: 100%;
-            max-width: 500px;
+            width: 92%;
+            max-width: 450px;
+            height: 94dvh; /* 화면 높이의 94% 안에서 모든 걸 해결 */
             background: white;
-            padding: 25px 20px;
+            padding: 20px;
             border-radius: 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            /* PC/모바일 모두에서 상단 여백 유지 */
-            margin-top: 10px;
+            justify-content: space-between; /* 요소들 사이 간격을 균등 분배 */
         }
 
         .main-header {
             text-align: center;
-            font-size: 1.15rem;
+            font-size: 1rem;
             font-weight: 800;
-            color: #333;
-            margin-bottom: 25px;
+            margin: 0 0 10px 0;
+            flex-shrink: 0; /* 크기 절대 안 줄어듦 */
         }
 
         .type-badge-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
         }
 
         .icon-box {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
             background: var(--color-visual);
             display: flex;
             align-items: center;
@@ -73,28 +68,28 @@
             flex-shrink: 0;
         }
 
-        .icon-box svg { width: 24px; height: 24px; fill: white; }
+        .icon-box svg { width: 20px; height: 20px; fill: white; }
 
         .title-group { display: flex; flex-direction: column; }
-        .type-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
-        .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
+        .type-title { font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 0; }
+        .type-desc-text { font-size: 0.75rem; color: #64748b; margin: 0; }
 
-        /* 3. 영상 영역: 여백을 최소화하고 상단 버튼 가리기 */
+        /* 2. 핵심: 영상 영역이 남는 공간에 맞춰 스스로 줄어듦 */
         .video-clip-wrapper {
             position: relative;
             width: 100%;
+            flex-grow: 1; /* 남는 공간 다 차지 */
+            flex-shrink: 1; /* 공간 부족하면 스스로 작아짐 */
+            min-height: 0; /* 중요: flex 안에서 줄어들 수 있게 함 */
             border-radius: 15px;
             overflow: hidden; 
             background: #000;
-            /* 영상 비율 최적화 */
-            aspect-ratio: 16 / 10; 
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .video-clip-wrapper iframe {
             position: absolute;
-            /* EBS 상단 메뉴 버튼 높이만큼 정교하게 가림 */
-            top: -128px; 
+            top: -128px; /* EBS 버튼 가리기 */
             left: 0;
             width: 100%;
             height: calc(100% + 128px);
@@ -102,10 +97,11 @@
         }
 
         .footer-info {
-            font-size: 0.88rem;
+            font-size: 0.8rem;
             color: #94a3b8;
-            line-height: 1.5;
-            margin: 0 0 20px 0;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            flex-shrink: 0;
         }
 
         .back-btn {
@@ -114,14 +110,12 @@
             text-decoration: none;
             color: #ff9a9e;
             font-weight: 700;
-            font-size: 0.95rem;
-            padding: 14px;
+            font-size: 0.9rem;
+            padding: 12px;
             border: 2px solid #ff9a9e;
             border-radius: 15px;
-            transition: all 0.2s ease;
+            flex-shrink: 0;
         }
-
-        .back-btn:hover { background: #ff9a9e; color: white; }
     </style>
 </head>
 <body>
@@ -144,7 +138,7 @@
     </div>
 
     <p class="footer-info">
-        시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.
+        시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕습니다.
     </p>
 
     <a href="index.html" class="back-btn">메인으로 돌아가기</a>
