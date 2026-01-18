@@ -5,78 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>시각형 학습 체험</title>
     <style>
-        /* 1. 기본 설정: 스크롤을 허용하여 절대 잘리지 않게 함 */
         * { box-sizing: border-box; }
-        
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
-            background-color: #f8fafc;
-            /* 세로 스크롤 허용, 가로 스크롤 방지 */
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
+        html, body { margin: 0; padding: 0; width: 100%; background-color: #f8fafc; overflow-x: hidden; overflow-y: auto; }
+        body { font-family: 'Pretendard', sans-serif; display: flex; justify-content: center; align-items: flex-start; padding: 40px 15px; }
 
-        body {
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            /* 중앙 정렬 대신 상단 정렬을 사용하여 제목 잘림 방지 */
-            align-items: flex-start;
-            padding: 20px 15px 40px 15px;
-        }
+        .page-container { width: 100%; max-width: 500px; background: white; padding: 25px 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; margin-bottom: 25px; }
 
-        .page-container {
-            width: 100%;
-            max-width: 500px;
-            background: white;
-            padding: 25px 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .main-header {
-            text-align: center;
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .type-badge-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .icon-box {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
+        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .icon-box { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .icon-box svg { width: 24px; height: 24px; fill: white; }
-
         .title-group { display: flex; flex-direction: column; }
         .type-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
         .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
 
-        /* 2. 영상 클리핑 기술: 상단 버튼 가리기 */
+        /* [수정 포인트] 영상 윗부분이 안 잘리도록 top 값을 -115px로 변경 */
         .video-wrapper {
             position: relative;
             width: 100%;
-            /* 영상 비율에 맞춰 높이 설정 (스크롤바 안생기게 조절됨) */
-            aspect-ratio: 16 / 9.5; 
+            aspect-ratio: 16 / 9; 
             border-radius: 15px;
             overflow: hidden; 
             background: #000;
@@ -85,63 +32,29 @@
 
         .video-wrapper iframe {
             position: absolute;
-            /* EBS 상단 버튼들을 화면 밖으로 밀어냄 */
-            top: -128px; 
+            top: -115px; /* 이 숫자를 줄여서 영상이 위로 덜 밀리게 했습니다 */
             left: 0;
             width: 100%;
-            /* 밀어낸 만큼 높이를 더해 영상 하단이 잘리지 않게 함 */
-            height: calc(100% + 128px);
+            height: calc(100% + 115px);
             border: none;
         }
 
-        .footer-info {
-            font-size: 0.88rem;
-            color: #94a3b8;
-            line-height: 1.5;
-            margin: 0 0 20px 0;
-        }
-
-        .back-btn {
-            display: block;
-            text-align: center;
-            text-decoration: none;
-            color: #ff9a9e;
-            font-weight: 700;
-            font-size: 0.95rem;
-            padding: 14px;
-            border: 2px solid #ff9a9e;
-            border-radius: 15px;
-            transition: all 0.2s ease;
-        }
-
-        .back-btn:hover { background: #ff9a9e; color: white; }
+        .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; }
+        .back-btn { display: block; text-align: center; text-decoration: none; color: #ff9a9e; font-weight: 700; padding: 14px; border: 2px solid #ff9a9e; border-radius: 15px; }
     </style>
 </head>
 <body>
-
 <div class="page-container">
     <div class="main-header">AI 디지털 학습 도구 체험</div>
-
     <div class="type-badge-row">
-        <div class="icon-box">
-            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-        </div>
-        <div class="title-group">
-            <h2 class="type-title">시각형</h2>
-            <p class="type-desc-text">이미지, 영상, 인포그래픽 활용 학습</p>
-        </div>
+        <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        <div class="title-group"><h2 class="type-title">시각형</h2><p class="type-desc-text">이미지, 영상, 인포그래픽 활용 학습</p></div>
     </div>
-
     <div class="video-wrapper">
         <iframe src="https://www.ebs.co.kr/onAirPlayer/onair_PLUS2.html" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
-
-    <p class="footer-info">
-        시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.
-    </p>
-
+    <p class="footer-info">시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.</p>
     <a href="index.html" class="back-btn">메인으로 돌아가기</a>
 </div>
-
 </body>
 </html>
