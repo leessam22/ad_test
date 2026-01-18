@@ -2,98 +2,157 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>시각형 학습 체험</title>
     <style>
         :root {
             --color-visual: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-        }
-        body { font-family: 'Pretendard', -apple-system, sans-serif; background: #f8fafc; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .page-container { width: 100%; max-width: 800px; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        
-        .main-title { 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-            margin-bottom: 15px; 
-            color: #333;
-        }
-        
-        .type-info {
-            margin-bottom: 25px;
-            padding-left: 15px;
-            border-left: 5px solid #ff9a9e; /* 포인트 컬러 */
+            --text-main: #1e293b;
         }
 
-        .type-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ff9a9e; /* 포인트 컬러 */
-            margin: 0 0 5px 0;
+        /* 스크롤 방지를 위한 설정 */
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; /* 전체 페이지 스크롤 금지 */
+            background-color: #f8fafc;
         }
 
-        .type-description {
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* 세로 중앙 정렬 */
+        }
+
+        .page-container {
+            width: 90%;
+            max-width: 500px; /* 모바일 최적화 너비 */
+            max-height: 95vh; /* 화면 높이에 맞춤 */
+            background: white;
+            padding: 25px 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-header {
+            text-align: center;
             font-size: 1.1rem;
-            color: #555;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .type-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--color-visual);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon-box svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+        }
+
+        .type-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
             margin: 0;
         }
 
-        .content-box { 
-            border-radius: 15px; 
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            /* 반응형 비디오 컨테이너 */
+        /* 핵심: 영상 버튼 가리기용 컨테이너 */
+        .video-clip-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 비율 */
-            height: 0;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden; /* 영역 밖 버튼 숨김 */
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            background: #000;
+            /* 16:9 비율 유지 */
+            aspect-ratio: 16 / 9;
         }
-        
-        .content-box iframe {
+
+        /* 아이프레임을 위로 밀어서 버튼 가리기 */
+        .video-clip-wrapper iframe {
             position: absolute;
-            top: 0;
+            top: -125px; /* 상단 버튼 높이만큼 위로 밀기 (조절 가능) */
             left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% + 125px); /* 밀려난 만큼 높이 추가 */
             border: none;
         }
 
-        .footer-desc { font-size: 0.9rem; color: #666; margin-top: 10px; }
-        
-        .back-btn { 
-            display: inline-block; 
-            margin-top: 30px; 
-            text-decoration: none; 
-            color: white; 
-            font-weight: bold;
-            background: var(--color-visual);
-            padding: 12px 25px;
-            border-radius: 30px;
-            box-shadow: 0 4px 10px rgba(255, 154, 158, 0.3);
+        .footer-info {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .back-btn {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #ff9a9e;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 12px;
+            border: 2px solid #ff9a9e;
+            border-radius: 15px;
             transition: 0.2s;
         }
-        
+
         .back-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(255, 154, 158, 0.4);
+            background: #ff9a9e;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <h2 class="main-title">AI 디지털 학습 도구 체험</h2>
-        
-        <div class="type-info">
-            <h3 class="type-name">시각형</h3>
-            <p class="type-description">이미지, 영상, 인포그래픽 활용 학습</p>
-        </div>
 
-        <div class="content-box">
-            <iframe src="https://www.ebs.co.kr/onAirPlayer/onair_bandi.html" title="EBS Player" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<div class="page-container">
+    <div class="main-header">AI 디지털 학습 도구 체험</div>
+
+    <div class="type-badge-row">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
         </div>
-        
-        <p class="footer-desc">위 영상은 EBS 온에어 실시간 방송 화면입니다. 다양한 시각 자료를 통해 학습 효과를 높일 수 있습니다.</p>
-        
-        <a href="index.html" class="back-btn">← 돌아가기</a>
+        <h2 class="type-title">시각형</h2>
     </div>
+
+    <div class="video-clip-wrapper">
+        <iframe 
+            src="https://www.ebs.co.kr/onAirPlayer/onair_PLUS2.html" 
+            title="EBS PLUS2" 
+            allow="autoplay; fullscreen" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <p class="footer-info">
+        이미지, 영상, 인포그래픽을 활용한 시각적 학습은 복잡한 개념을 직관적으로 이해하도록 돕습니다.
+    </p>
+
+    <a href="index.html" class="back-btn">메인으로 돌아가기</a>
+</div>
+
 </body>
 </html>
