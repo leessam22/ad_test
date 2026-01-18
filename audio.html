@@ -5,107 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>청각형 학습 체험</title>
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        /* 1. 스크롤 활성화: 높이를 고정하지 않고 내용에 따라 늘어나게 설정 */
+        :root {
+            /* 청각형 블루 그라데이션 */
+            --color-audio: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            --text-main: #1e293b;
+        }
+
+        /* 상단 잘림 방지 및 스크롤 최적화 */
         html, body { 
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            min-height: 100%; 
-            background-color: #f8fafc; 
-            overflow-x: hidden; 
-            overflow-y: auto; /* 세로 스크롤 허용 */
-            -webkit-overflow-scrolling: touch; /* 모바일 부드러운 스크롤 */
+            margin: 0; padding: 0; width: 100%; min-height: 100%; 
+            background-color: #f8fafc; overflow-x: hidden; overflow-y: auto; 
+            -webkit-overflow-scrolling: touch;
         }
 
         body { 
-            font-family: 'Pretendard', sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-start; 
-            padding: 40px 15px; 
+            font-family: 'Pretendard', -apple-system, sans-serif; 
+            display: flex; justify-content: center; align-items: flex-start; 
+            padding: 40px 15px 60px 15px; 
         }
 
         .page-container { 
-            width: 100%; 
-            max-width: 500px; 
-            background: white; 
-            padding: 25px 20px; 
-            border-radius: 25px; 
+            width: 100%; max-width: 500px; background: white; 
+            padding: 30px 20px; border-radius: 30px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
 
-        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; margin-bottom: 25px; }
+        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; color: #333; margin-bottom: 25px; }
 
-        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; }
         .icon-box { 
-            width: 45px; 
-            height: 45px; 
-            border-radius: 12px; 
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            flex-shrink: 0; 
+            width: 45px; height: 45px; border-radius: 12px; 
+            background: var(--color-audio); display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
         .icon-box svg { width: 24px; height: 24px; fill: white; }
-        
-        .title-group { display: flex; flex-direction: column; }
-        .type-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
-        .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
+        .type-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin: 0; }
 
-        /* 2. 영상 잘림 해결: 상단 가리기(top) 값을 -95px로 낮추어 실제 화면 보호 */
-        .video-wrapper {
+        /* [디자인 포인트] 오디오 전용 카드 레이아웃 */
+        .player-card {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 25px;
             position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9; 
-            border-radius: 15px;
-            overflow: hidden; 
-            background: #000;
-            margin-bottom: 15px;
+            overflow: hidden;
         }
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: -95px; /* 115px에서 95px로 조정하여 영상 잘림 방지 */
-            left: 0;
-            width: 100%;
-            height: calc(100% + 95px);
-            border: none;
+        /* 소리가 재생 중임을 시각적으로 보여주는 물결 애니메이션 */
+        .wave-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            height: 40px;
+            margin-bottom: 20px;
         }
 
-        .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; }
+        .wave-bar {
+            width: 4px;
+            height: 10px;
+            background: #7aa7e5;
+            border-radius: 2px;
+            animation: wave 1.2s infinite ease-in-out;
+        }
+
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 20px; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 30px; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; height: 15px; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; height: 25px; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(2); }
+        }
+
+        .player-label { font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 15px; display: block; }
+
+        /* 오디오 태그 스타일링 */
+        audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 25px; }
         
         .back-btn { 
-            display: block; 
-            text-align: center; 
-            text-decoration: none; 
-            color: #7aa7e5; 
-            font-weight: 700; 
-            padding: 14px; 
-            border: 2px solid #a1c4fd; 
-            border-radius: 15px; 
+            display: block; text-align: center; text-decoration: none; 
+            color: #7aa7e5; font-weight: 700; padding: 15px; 
+            border: 2px solid #a1c4fd; border-radius: 18px; transition: 0.2s;
         }
+        .back-btn:hover { background: #f0f7ff; }
     </style>
 </head>
 <body>
+
 <div class="page-container">
     <div class="main-header">AI 디지털 학습 도구 체험</div>
+
     <div class="type-badge-row">
         <div class="icon-box">
             <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9v7c0 1.1.9 2 2 2h4v-8H5v-1c0-3.87 3.13-7 7-7s7 3.13 7 7v1h-4v8h4c1.1 0 2-.9 2-2v-7a9 9 0 0 0-9-9z"/></svg>
         </div>
         <div class="title-group">
-            <h2 class="type-title">청각형</h2>
-            <p class="type-desc-text">오디오 팟캐스트, 음성 피드백 활용 학습</p>
+            <h2 class="type-title">청각형 학습</h2>
         </div>
     </div>
-    <div class="video-wrapper">
-        <iframe src="https://www.ebs.co.kr/onAirPlayer/onair_bandi.html" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+    <div class="player-card">
+        <span class="player-label">현재 EBS 라디오 실시간 스트리밍 중</span>
+        
+        <div class="wave-container">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+
+        <audio controls autoplay playsinline>
+            <source src="https://ebsonair.ebs.co.kr/cloud1/iradio/playlist.m3u8" type="application/x-mpegURL">
+            브라우저가 오디오 재생을 지원하지 않습니다.
+        </audio>
     </div>
-    <p class="footer-info">오디오 자료는 집중력을 높여 정보를 효율적으로 습득하게 합니다.</p>
+
+    <p class="footer-info">
+        오디오 자료는 집중력을 높여 정보를 효율적으로 습득하게 하며, 시공간의 제약 없이 학습할 수 있게 돕습니다.
+    </p>
+    
     <a href="index.html" class="back-btn">메인으로 돌아가기</a>
 </div>
+
 </body>
 </html>
