@@ -1,9 +1,120 @@
-<div class="main-header" style="border-color: #a18cd1;">AI 디지털 학습 도구 체험</div>
-<div class="sub-header">
-    <div class="type-label" style="border-color: #a18cd1;">혼합형</div>
-    <div class="type-desc">다양한 AI·디지털 학습 방식의 조합</div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>체험형 학습 체험</title>
+    <style>
+        * { box-sizing: border-box; }
+        
+        /* 1. 스크롤 및 잘림 방지 설정 */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            min-height: 100%; 
+            background-color: #f8fafc; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+            padding: 40px 15px; 
+        }
+
+        .page-container { 
+            width: 100%; 
+            max-width: 500px; 
+            background: white; 
+            padding: 25px 20px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        }
+
+        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; color: #333; margin-bottom: 25px; }
+
+        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        
+        /* 초록색 체험형 테마 (index.html 일치) */
+        .icon-box { 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 12px; 
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0; 
+        }
+        .icon-box svg { width: 24px; height: 24px; fill: white; }
+        
+        .title-group { display: flex; flex-direction: column; }
+        .type-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
+        .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
+
+        /* 2. 인터랙티브 콘텐츠 영역 (클리핑 최소화) */
+        .content-wrapper {
+            position: relative;
+            width: 100%;
+            /* 체험형은 조작을 위해 세로 길이를 조금 더 여유있게(1:1에 가깝게) 설정 가능 */
+            aspect-ratio: 16 / 12; 
+            border-radius: 15px;
+            overflow: hidden; 
+            background: #eee; /* 로딩 전 배경색 */
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+
+        .content-wrapper iframe {
+            position: absolute;
+            /* 인터랙티브 사이트는 메뉴가 중요하므로 상단을 덜 가립니다 (-50px) */
+            top: -50px; 
+            left: 0;
+            width: 100%;
+            height: calc(100% + 50px);
+            border: none;
+        }
+
+        .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; }
+        
+        .back-btn { 
+            display: block; 
+            text-align: center; 
+            text-decoration: none; 
+            color: #5bb381; /* 초록색 테마에 맞춘 색상 */
+            font-weight: 700; 
+            padding: 14px; 
+            border: 2px solid #84fab0; 
+            border-radius: 15px; 
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="main-header">AI 디지털 학습 도구 체험</div>
+
+    <div class="type-badge-row">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M7 1.5c-1.93 0-3.5 1.57-3.5 3.5v11.5c0 1.93 1.57 3.5 3.5 3.5h10c1.93 0 3.5-1.57 3.5-3.5V5c0-1.93-1.57-3.5-3.5-3.5H7zm0 2h10c.83 0 1.5.67 1.5 1.5v11.5c0 .83-.67 1.5-1.5 1.5H7c-.83 0-1.5-.67-1.5-1.5V5c0-.83.67-1.5 1.5-1.5zM12 7l-4 4h8l-4-4z"/></svg>
+        </div>
+        <div class="title-group">
+            <h2 class="type-title">체험형</h2>
+            <p class="type-desc-text">시뮬레이션, 인터랙티브 퀴즈 등 활용 학습</p>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <iframe src="https://www.ebsmath.co.kr/innovativelrms/web_lrms/content/resource/PC/28320/index.html?check=false&PKG_SNO=&PKG_ORG_NO=&RSC_SNO=28320&EVT_SNO=&HIDE_RANK=N&HISTORY_TYPE=study&DEVICE_TYPE=MOB" allowfullscreen></iframe>
+    </div>
+
+    <p class="footer-info">직접 조작하며 배우는 시뮬레이션 콘텐츠는 학습자의 몰입도와 개념 이해를 돕습니다.</p>
+    
+    <a href="index.html" class="back-btn">메인으로 돌아가기</a>
 </div>
-<div class="content-box" style="border-color: #a18cd1;">
-    <h3>&lt;혼합형 학습 예시&gt;</h3>
-    <p>영상 시청 후 퀴즈 풀기 등 복합 콘텐츠</p>
-</div>
+</body>
+</html>
