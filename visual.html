@@ -75,4 +75,46 @@
       inset: 0;
       width: 100%;
       height: calc(100% + var(--hideTop)); /* ✅ 위쪽 가릴 거면 실제 높이를 늘리고 */
-      transform: translateY(calc(-1 * var(--hideTop)*
+      transform: translateY(calc(-1 * var(--hideTop))); /* ✅ 위로 올려서 위쪽을 잘라냄 */
+      border: 0;
+    }
+
+    /* ✅ 작은 화면에선 카드 padding 때문에 더 답답하면 살짝 키우기 */
+    @media (max-width: 420px) {
+      .video-wrapper { height: min(56.25vw, 58svh); }
+    }
+
+    .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; }
+    .back-btn { display: block; text-align: center; text-decoration: none; color: #ff9a9e; font-weight: 700; padding: 14px; border: 2px solid #ff9a9e; border-radius: 15px; }
+  </style>
+</head>
+
+<body>
+  <div class="screen">
+    <div class="page-container">
+      <div class="main-header">AI 디지털 학습 도구 체험</div>
+
+      <div class="type-badge-row">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </div>
+        <div class="title-group">
+          <h2 class="type-title">시각형</h2>
+          <p class="type-desc-text">이미지, 영상, 인포그래픽 활용 학습</p>
+        </div>
+      </div>
+
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.ebs.co.kr/onAirPlayer/onair_PLUS2.html"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <p class="footer-info">시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.</p>
+      <a href="index.html" class="back-btn">메인으로 돌아가기</a>
+    </div>
+  </div>
+</body>
+</html>
