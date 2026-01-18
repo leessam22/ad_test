@@ -1,187 +1,130 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>시각형 학습 체험</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>시각형 학습 체험</title>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        :root {
+            --color-visual: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --text-main: #1e293b;
+        }
 
-  <style>
-    * { box-sizing: border-box; }
+        /* 스크롤 및 잘림 방지 설정 */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            min-height: 100%; 
+            background-color: #f8fafc; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch;
+        }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      background-color: #f8fafc;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
+        body { 
+            font-family: 'Pretendard', -apple-system, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+            padding: 40px 15px 60px 15px; 
+        }
 
-    /* ✅ 모바일 스크롤 꼬임 방지: body flex 제거 */
-    body {
-      font-family: 'Pretendard', sans-serif;
-      padding: 40px 15px;
-    }
+        .page-container { 
+            width: 100%; 
+            max-width: 500px; 
+            background: white; 
+            padding: 25px 20px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        }
 
-    .page-container {
-      width: 100%;
-      max-width: 500px;
-      background: white;
-      padding: 25px 20px;
-      border-radius: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      margin: 0 auto;
-    }
+        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; color: #333; margin-bottom: 25px; }
 
-    .main-header {
-      text-align: center;
-      font-size: 1.15rem;
-      font-weight: 800;
-      margin-bottom: 25px;
-    }
+        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        
+        .icon-box { 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 12px; 
+            background: var(--color-visual); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0; 
+        }
+        .icon-box svg { width: 24px; height: 24px; fill: white; }
+        
+        .title-group { display: flex; flex-direction: column; }
+        .type-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
+        .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
 
-    .type-badge-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 15px;
-    }
+        /* [핵심] 영상 영역: 더 이상 top 마이너스 값을 주지 않아도 되므로 안 잘립니다 */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden; 
+            background: #000;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
 
-    .icon-box {
-      width: 45px;
-      height: 45px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+        video {
+            width: 100%;
+            display: block;
+            border-radius: 15px;
+        }
 
-    .icon-box svg {
-      width: 24px;
-      height: 24px;
-      fill: white;
-    }
-
-    .title-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .type-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin: 0;
-    }
-
-    .type-desc-text {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin: 2px 0 0 0;
-    }
-
-    /* ✅ 핵심: 절대 top:-115px 같은 “위로 올리기” 제거 */
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;   /* 16:9 고정 */
-      border-radius: 15px;
-      overflow: hidden;
-      background: #000;
-      margin-bottom: 15px;
-    }
-
-    .video-wrapper iframe {
-      position: absolute;
-      inset: 0;               /* top/left/right/bottom = 0 */
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .footer-info {
-      font-size: 0.88rem;
-      color: #94a3b8;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    .back-btn {
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      color: #ff9a9e;
-      font-weight: 700;
-      padding: 14px;
-      border: 2px solid #ff9a9e;
-      border-radius: 15px;
-    }
-
-    /* ✅ 모바일에서 “화면에 꽉 차게” 더 크게 보이게 */
-    @media (max-width: 520px) {
-      body { padding: 0; }
-
-      .page-container {
-        max-width: none;
-        border-radius: 0;
-        box-shadow: none;
-        padding: 18px 14px 28px;
-        margin: 0;
-      }
-
-      .video-wrapper {
-        border-radius: 14px;
-        /* 화면 폭을 최대한 쓰고 싶으면 margin/padding을 줄이면 됨 */
-      }
-    }
-
-    /*
-      📌 만약 “위쪽 버튼을 여전히 일부러 가리고 싶으면”
-      아래 주석을 해제하고 값만 조절해.
-      (단, 그러면 ‘위쪽이 짤린다’ 현상은 의도된 동작이 됨)
-
-    :root { --hideTop: 80px; }
-
-    .video-wrapper iframe {
-      height: calc(100% + var(--hideTop));
-      transform: translateY(calc(-1 * var(--hideTop)));
-    }
-    */
-  </style>
+        .footer-info { 
+            font-size: 0.88rem; 
+            color: #94a3b8; 
+            line-height: 1.5; 
+            margin-bottom: 25px; 
+        }
+        
+        .back-btn { 
+            display: block; 
+            text-align: center; 
+            text-decoration: none; 
+            color: #ff9a9e; 
+            font-weight: 700; 
+            padding: 14px; 
+            border: 2px solid #ff9a9e; 
+            border-radius: 15px; 
+            transition: 0.2s;
+        }
+        .back-btn:hover { background: #fff5f5; }
+    </style>
 </head>
-
 <body>
-  <div class="page-container">
+<div class="page-container">
     <div class="main-header">AI 디지털 학습 도구 체험</div>
 
     <div class="type-badge-row">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-        </svg>
-      </div>
-
-      <div class="title-group">
-        <h2 class="type-title">시각형</h2>
-        <p class="type-desc-text">이미지, 영상, 인포그래픽 활용 학습</p>
-      </div>
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </div>
+        <div class="title-group">
+            <h2 class="type-title">시각형</h2>
+            <p class="type-desc-text">이미지, 영상, 인포그래픽 활용 학습</p>
+        </div>
     </div>
 
     <div class="video-wrapper">
-      <iframe
-        src="https://www.ebs.co.kr/onAirPlayer/onair_PLUS2.html"
-        allow="autoplay; fullscreen"
-        allowfullscreen
-      ></iframe>
+        <video controls autoplay muted playsinline>
+            <source src="http://ebsonairios.ebs.co.kr/plus2tablet500k/tablet500k/playlist.m3u8" type="application/x-mpegURL">
+            브라우저가 비디오 재생을 지원하지 않습니다.
+        </video>
     </div>
 
     <p class="footer-info">
-      시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.
+        시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.
     </p>
-
+    
     <a href="index.html" class="back-btn">메인으로 돌아가기</a>
-  </div>
+</div>
 </body>
 </html>
