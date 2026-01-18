@@ -5,29 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>시각형 학습 체험</title>
     <style>
-        body { font-family: sans-serif; background: #f8fafc; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        :root {
+            --color-visual: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+        body { font-family: 'Pretendard', -apple-system, sans-serif; background: #f8fafc; margin: 0; padding: 20px; display: flex; justify-content: center; }
         .page-container { width: 100%; max-width: 800px; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .main-header { border: 1px solid #ff9a9e; padding: 15px; text-align: center; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
-        .sub-header { display: flex; gap: 10px; margin-bottom: 20px; }
-        .type-label { border: 1px solid #ff9a9e; padding: 10px 30px; font-weight: bold; }
-        .type-desc { border: 1px solid #eee; flex-grow: 1; padding: 10px; display: flex; align-items: center; }
-        .content-box { border: 2px solid #ff9a9e; border-radius: 10px; padding: 40px; text-align: center; min-height: 200px; margin-bottom: 15px; }
-        .footer-desc { font-size: 0.9rem; color: #666; }
-        .back-btn { display: inline-block; margin-top: 20px; text-decoration: none; color: #ff9a9e; font-weight: bold; }
+        
+        .main-title { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            margin-bottom: 15px; 
+            color: #333;
+        }
+        
+        .type-info {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 5px solid #ff9a9e; /* 포인트 컬러 */
+        }
+
+        .type-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff9a9e; /* 포인트 컬러 */
+            margin: 0 0 5px 0;
+        }
+
+        .type-description {
+            font-size: 1.1rem;
+            color: #555;
+            margin: 0;
+        }
+
+        .content-box { 
+            border-radius: 15px; 
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            /* 반응형 비디오 컨테이너 */
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 비율 */
+            height: 0;
+        }
+        
+        .content-box iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .footer-desc { font-size: 0.9rem; color: #666; margin-top: 10px; }
+        
+        .back-btn { 
+            display: inline-block; 
+            margin-top: 30px; 
+            text-decoration: none; 
+            color: white; 
+            font-weight: bold;
+            background: var(--color-visual);
+            padding: 12px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(255, 154, 158, 0.3);
+            transition: 0.2s;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 154, 158, 0.4);
+        }
     </style>
 </head>
 <body>
     <div class="page-container">
-        <div class="main-header">AI 디지털 학습 도구 체험</div>
-        <div class="sub-header">
-            <div class="type-label">시각형</div>
-            <div class="type-desc">이미지, 영상, 인포그래픽 활용 학습</div>
+        <h2 class="main-title">AI 디지털 학습 도구 체험</h2>
+        
+        <div class="type-info">
+            <h3 class="type-name">시각형</h3>
+            <p class="type-description">이미지, 영상, 인포그래픽 활용 학습</p>
         </div>
+
         <div class="content-box">
-            <h3>&lt;영상 학습 예시&gt;</h3>
-            <p>1. 동영상 링크 임베디드 화면 (1개)</p>
-            </div>
-        <p class="footer-desc">위에 동영상 링크에 대한 설명이 들어가는 자리입니다.</p>
+            <iframe src="https://www.ebs.co.kr/onAirPlayer/onair_bandi.html" title="EBS Player" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+        
+        <p class="footer-desc">위 영상은 EBS 온에어 실시간 방송 화면입니다. 다양한 시각 자료를 통해 학습 효과를 높일 수 있습니다.</p>
+        
         <a href="index.html" class="back-btn">← 돌아가기</a>
     </div>
 </body>
