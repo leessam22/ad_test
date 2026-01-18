@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>시각형 학습 체험</title>
     <style>
-        /* 모든 요소의 크기 계산 방식 통일 (패딩 포함) */
         * { box-sizing: border-box; }
 
         :root {
@@ -13,33 +12,36 @@
             --text-main: #1e293b;
         }
 
-        /* 화면 전체 스크롤 금지 */
+        /* 1. 스크롤 봉인 해제: 넘칠 경우 스크롤이 생기도록 설정 */
         html, body { 
-            height: 100vh; 
-            width: 100vw;
+            min-height: 100%;
             margin: 0; 
             padding: 0; 
-            overflow: hidden; 
             background-color: #f8fafc;
+            /* 가로 스크롤은 막고 세로 스크롤만 허용 */
+            overflow-x: hidden;
+            overflow-y: auto; 
         }
 
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
-            align-items: center;
+            /* 상단 잘림 방지: 위아래 여백을 주어 여유있게 배치 */
+            padding: 20px 0;
         }
 
         .page-container {
-            width: 95%;
+            width: 92%;
             max-width: 500px;
-            height: 96vh; /* 화면 높이의 96%만 사용하도록 제한 */
             background: white;
-            padding: 20px;
+            padding: 25px 20px;
             border-radius: 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
-            flex-direction: column; /* 세로로 배치 */
+            flex-direction: column;
+            /* 화면 중앙 배치를 유지하되 스크롤 가능하게 마진 조정 */
+            margin: auto 15px;
         }
 
         .main-header {
@@ -47,17 +49,14 @@
             font-size: 1.1rem;
             font-weight: 800;
             color: #333;
-            margin-bottom: 15px;
-            flex-shrink: 0; /* 제목 크기 고정 */
+            margin-bottom: 20px;
         }
 
-        /* 사라졌던 설명 부분 복구 */
         .type-badge-row {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 15px;
-            flex-shrink: 0;
         }
 
         .icon-box {
@@ -74,26 +73,23 @@
         .icon-box svg { width: 24px; height: 24px; fill: white; }
 
         .title-group { display: flex; flex-direction: column; }
-
         .type-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
-
         .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
 
-        /* 핵심: 영상 영역 - 남은 공간을 모두 차지하되 넘치지 않음 */
+        /* 2. 영상 영역: 여백을 최소화하면서 비율 유지 */
         .video-clip-wrapper {
             position: relative;
-            flex-grow: 1; /* 남는 공간 자동 차지 */
             width: 100%;
             border-radius: 15px;
             overflow: hidden; 
             background: #000;
+            aspect-ratio: 16 / 10.2; 
             margin-bottom: 15px;
         }
 
-        /* EBS 상단 버튼 가리기 기법 */
         .video-clip-wrapper iframe {
             position: absolute;
-            top: -128px; /* 버튼 가리기 높이 */
+            top: -128px; /* EBS 상단 버튼 가리기 */
             left: 0;
             width: 100%;
             height: calc(100% + 128px);
@@ -101,11 +97,10 @@
         }
 
         .footer-info {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #94a3b8;
             line-height: 1.4;
-            margin-bottom: 15px;
-            flex-shrink: 0;
+            margin-bottom: 20px;
         }
 
         .back-btn {
@@ -115,14 +110,19 @@
             color: #ff9a9e;
             font-weight: 700;
             font-size: 0.9rem;
-            padding: 12px;
+            padding: 13px;
             border: 2px solid #ff9a9e;
             border-radius: 15px;
-            flex-shrink: 0;
             transition: 0.2s;
         }
 
         .back-btn:hover { background: #ff9a9e; color: white; }
+
+        /* 화면 높이가 아주 낮은 폰을 위한 대응 */
+        @media (max-height: 600px) {
+            .page-container { margin: 10px auto; }
+            .main-header { margin-bottom: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -145,7 +145,7 @@
     </div>
 
     <p class="footer-info">
-        시각 자료는 복잡한 개념을 직관적으로 이해하도록 돕습니다.
+        시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.
     </p>
 
     <a href="index.html" class="back-btn">메인으로 돌아가기</a>
