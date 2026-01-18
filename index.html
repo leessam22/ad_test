@@ -3,26 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 디지털 학습 유형</title>
+    <title>AI·디지털 학습 도구 활용</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #4A90E2; --bg: #F5F7FA; }
-        body { font-family: 'Pretendard', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; margin: 0; }
-        .container { background: white; width: 100%; max-width: 500px; border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; }
-        .title-box { border: 2px solid #333; padding: 15px; margin-bottom: 30px; border-radius: 10px; font-size: 1.5rem; font-weight: bold; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .item { background: #fff; border: 1.5px solid #eee; padding: 25px 10px; border-radius: 15px; text-decoration: none; color: #444; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 80px; }
-        .item:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(74,144,226,0.1); }
+        :root {
+            --primary: #4A90E2;
+            --bg: #f0f2f5;
+            --card-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .app-container {
+            background: var(--card-white);
+            width: 100%;
+            max-width: 600px;
+            border-radius: 30px;
+            padding: 40px 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1d1d1f;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* PC에선 2열 */
+            gap: 20px;
+        }
+
+        .nav-item {
+            background: #fff;
+            border: 1px solid #e1e1e7;
+            border-radius: 20px;
+            padding: 30px 15px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* 아이콘 스타일 */
+        .nav-item i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .nav-item span {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* 마우스 올렸을 때 효과 */
+        .nav-item:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(74,144,226,0.15);
+        }
+
+        /* 핵심: 모바일 반응형 설정 */
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr; /* 모바일에선 1열 */
+            }
+            .header-title {
+                font-size: 1.5rem;
+            }
+            .nav-item {
+                padding: 20px;
+                flex-direction: row; /* 모바일에서 아이콘과 글자를 옆으로 배치 */
+                justify-content: flex-start;
+                padding-left: 30px;
+            }
+            .nav-item i {
+                font-size: 1.8rem;
+                width: 40px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title-box">AI·디지털 학습 유형</div>
-        <div class="grid">
-            <a href="link1.html" class="item">시각형</a>
-            <a href="link2.html" class="item">청각형</a>
-            <a href="link3.html" class="item">체험형</a>
-            <a href="link4.html" class="item">혼합형</a>
-        </div>
+
+<div class="app-container">
+    <div class="header-title">AI·디지털 학습 도구 활용</div>
+
+    <div class="grid">
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-eye"></i>
+            <span>시각형</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-headphones"></i>
+            <span>청각형</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-hand-pointer"></i>
+            <span>체험형</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>혼합형</span>
+        </a>
     </div>
+</div>
+
 </body>
 </html>
