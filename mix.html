@@ -8,106 +8,78 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         :root {
-            /* 혼합형 보라색 그라데이션 */
             --color-mix: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
             --text-main: #1e293b;
         }
 
-        /* 1. 상단 잘림 방지 및 자연스러운 스크롤 설정 */
         html, body { 
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            min-height: 100%; 
-            background-color: #f8fafc; 
-            overflow-x: hidden; 
-            overflow-y: auto; 
-            -webkit-overflow-scrolling: touch;
+            margin: 0; padding: 0; width: 100%; min-height: 100%; 
+            background-color: #f8fafc; overflow-x: hidden; overflow-y: auto; 
         }
 
         body { 
             font-family: 'Pretendard', -apple-system, sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-start; /* 상단 고정 배치하여 잘림 방지 */
+            display: flex; justify-content: center; align-items: flex-start; 
             padding: 40px 15px 60px 15px; 
         }
 
         .page-container { 
-            width: 100%; 
-            max-width: 500px; 
-            background: white; 
-            padding: 25px 20px; 
-            border-radius: 25px; 
+            width: 100%; max-width: 500px; background: white; 
+            padding: 25px 20px; border-radius: 25px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
 
         .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; color: #333; margin-bottom: 25px; }
 
-        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-        
+        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
         .icon-box { 
-            width: 45px; 
-            height: 45px; 
-            border-radius: 12px; 
-            background: var(--color-mix); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            flex-shrink: 0; 
+            width: 45px; height: 45px; border-radius: 12px; 
+            background: var(--color-mix); display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
         .icon-box svg { width: 24px; height: 24px; fill: white; }
-        
-        .title-group { display: flex; flex-direction: column; }
-        .type-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
-        .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
+        .type-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin: 0; }
 
-        /* 2. 인터랙티브 콘텐츠 영역 (사이언스올 최적화) */
-        .content-wrapper {
-            position: relative;
-            width: 100%;
-            /* 콘텐츠 조작을 위해 세로 비율을 넉넉하게 설정 */
-            aspect-ratio: 16 / 12; 
-            border-radius: 15px;
-            overflow: hidden; 
-            background: #000;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 1px solid #eee;
-        }
-
-        .content-wrapper iframe {
-            position: absolute;
-            /* 상단 메뉴가 잘리지 않도록 가리는 값을 -40px로 조정 */
-            top: -40px; 
-            left: 0;
-            width: 100%;
-            height: calc(100% + 40px);
-            border: none;
-        }
-
-        .footer-info { 
-            font-size: 0.88rem; 
-            color: #94a3b8; 
-            line-height: 1.5; 
-            margin-bottom: 25px; 
-        }
-        
-        .back-btn { 
-            display: block; 
-            text-align: center; 
-            text-decoration: none; 
-            color: #8b5cf6; 
-            font-weight: 700; 
-            padding: 14px; 
-            border: 2px solid #ddd6fe; 
-            border-radius: 15px; 
+        /* [핵심] 컨텐츠 시작 카드 디자인 */
+        .content-launch-card {
+            background: #fdfbff;
+            border: 2px dashed #d1d5db;
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 25px;
             transition: 0.2s;
         }
-        .back-btn:hover { background: #f5f3ff; }
+
+        .content-launch-card:hover { border-color: #a18cd1; background: #f5f3ff; }
+
+        .launch-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+        .launch-title { font-size: 1.1rem; font-weight: 700; color: #4c1d95; margin-bottom: 8px; }
+        .launch-desc { font-size: 0.85rem; color: #64748b; margin-bottom: 25px; line-height: 1.5; }
+
+        .start-btn {
+            display: inline-block;
+            background: var(--color-mix);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 14px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(161, 140, 209, 0.3);
+            transition: 0.2s;
+        }
+        .start-btn:active { transform: scale(0.95); }
+
+        .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 25px; }
+        
+        .back-btn { 
+            display: block; text-align: center; text-decoration: none; 
+            color: #8b5cf6; font-weight: 700; padding: 14px; 
+            border: 2px solid #ddd6fe; border-radius: 15px; 
+        }
     </style>
 </head>
 <body>
+
 <div class="page-container">
     <div class="main-header">AI 디지털 학습 도구 체험</div>
 
@@ -116,20 +88,25 @@
             <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5c0-1.1-.9-2-2-2s-2 .9-2 2V5H5c-1.1 0-1.99.9-1.99 2v3.8H4.5c1.1 0 2 .9 2 2s-.9 2-2 2H3.01V17c0 1.1.9 2 2 2h3.8v-1.5c0-1.1.9-2 2-2s2 .9 2 2V19h4c1.1 0 2-.9 2-2v-4h1.5c1.1 0 2-.9 2-2s-.9-2-2-2z"/></svg>
         </div>
         <div class="title-group">
-            <h2 class="type-title">혼합형</h2>
-            <p class="type-desc-text">시각, 청각, 체험의 복합 학습 경험</p>
+            <h2 class="type-title">혼합형 학습</h2>
         </div>
     </div>
 
-    <div class="content-wrapper">
-        <iframe src="https://www.scienceall.com/jnrepo/uploads//new/activity/12_035/index.html" allowfullscreen></iframe>
+    <div class="content-launch-card">
+        <span class="launch-icon">🧩</span>
+        <h3 class="launch-title">인터랙티브 학습 시작</h3>
+        <p class="launch-desc">
+            사이언스올에서 제공하는 고품질 과학 콘텐츠를<br>새 창에서 안전하게 실행합니다.
+        </p>
+        <a href="https://www.scienceall.com/jnrepo/uploads//new/activity/12_035/index.html" target="_blank" class="start-btn">학습 시작하기</a>
     </div>
 
     <p class="footer-info">
-        텍스트와 영상, 그리고 직접 조작하는 시뮬레이션이 결합된 혼합형 콘텐츠는 개념을 가장 입체적으로 이해할 수 있게 합니다.
+        시각, 청각, 체험 요소가 결합된 혼합형 콘텐츠는 가장 입체적인 학습 경험을 제공합니다.
     </p>
     
     <a href="index.html" class="back-btn">메인으로 돌아가기</a>
 </div>
+
 </body>
 </html>
