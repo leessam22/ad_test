@@ -1,30 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>시각형 학습 체험</title>
 
   <style>
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; width: 100%; background-color: #f8fafc; }
 
-    /* ✅ body를 flex 정렬로 두면 모바일에서 스크롤 꼬이는 경우가 많아서 제거 */
-    body {
-      font-family: 'Pretendard', sans-serif;
+    html, body {
+      margin: 0;
       padding: 0;
+      width: 100%;
+      background-color: #f8fafc;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
-    /* ✅ 화면 전체를 스크롤 컨테이너로 (iOS 스크롤 안정화) */
-    .screen {
-      min-height: 100svh;               /* 최신: iOS 주소창 변화에도 안정 */
-      min-height: 100vh;                /* fallback */
+    /* ✅ 모바일 스크롤 꼬임 방지: body flex 제거 */
+    body {
+      font-family: 'Pretendard', sans-serif;
       padding: 40px 15px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
     }
 
     .page-container {
@@ -34,87 +30,158 @@
       padding: 25px 20px;
       border-radius: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin: 0 auto;
     }
 
-    .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; margin-bottom: 25px; }
-
-    .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
-    .icon-box { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .icon-box svg { width: 24px; height: 24px; fill: white; }
-    .title-group { display: flex; flex-direction: column; }
-    .type-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
-    .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
-
-    /* =========================
-       ✅ 핵심: “모바일 화면에 딱 맞게”
-       - iframe을 top:-115px 같은 방식으로 밀지 말고,
-       - 래퍼에서 높이를 확보하고 중앙 정렬 + 오버플로우로 처리
-    ========================== */
-
-    :root{
-      --hideTop: 115px;  /* ✅ 위쪽 버튼 가림 정도 (원하면 0px~ 조절) */
+    .main-header {
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 25px;
     }
 
+    .type-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .icon-box {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-box svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .type-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+    }
+
+    .type-desc-text {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin: 2px 0 0 0;
+    }
+
+    /* ✅ 핵심: 절대 top:-115px 같은 “위로 올리기” 제거 */
     .video-wrapper {
       position: relative;
       width: 100%;
+      aspect-ratio: 16 / 9;   /* 16:9 고정 */
       border-radius: 15px;
       overflow: hidden;
       background: #000;
       margin-bottom: 15px;
-
-      /* ✅ 모바일에서 "화면에 딱 맞게" 보이게:
-         - 카드 내부에서 너무 커지지 않게 최대 높이를 제한
-         - 화면 높이 기준으로 계산 (헤더/설명/버튼 공간 고려해서 적당히)
-      */
-      height: min(56.25vw, 52svh);   /* 16:9(=56.25vw) vs 화면높이(52svh) 중 작은 값 */
     }
 
     .video-wrapper iframe {
       position: absolute;
-      inset: 0;
+      inset: 0;               /* top/left/right/bottom = 0 */
       width: 100%;
-      height: calc(100% + var(--hideTop)); /* ✅ 위쪽 가릴 거면 실제 높이를 늘리고 */
-      transform: translateY(calc(-1 * var(--hideTop))); /* ✅ 위로 올려서 위쪽을 잘라냄 */
-      border: 0;
+      height: 100%;
+      border: none;
     }
 
-    /* ✅ 작은 화면에선 카드 padding 때문에 더 답답하면 살짝 키우기 */
-    @media (max-width: 420px) {
-      .video-wrapper { height: min(56.25vw, 58svh); }
+    .footer-info {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 20px;
     }
 
-    .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; }
-    .back-btn { display: block; text-align: center; text-decoration: none; color: #ff9a9e; font-weight: 700; padding: 14px; border: 2px solid #ff9a9e; border-radius: 15px; }
+    .back-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: #ff9a9e;
+      font-weight: 700;
+      padding: 14px;
+      border: 2px solid #ff9a9e;
+      border-radius: 15px;
+    }
+
+    /* ✅ 모바일에서 “화면에 꽉 차게” 더 크게 보이게 */
+    @media (max-width: 520px) {
+      body { padding: 0; }
+
+      .page-container {
+        max-width: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 28px;
+        margin: 0;
+      }
+
+      .video-wrapper {
+        border-radius: 14px;
+        /* 화면 폭을 최대한 쓰고 싶으면 margin/padding을 줄이면 됨 */
+      }
+    }
+
+    /*
+      📌 만약 “위쪽 버튼을 여전히 일부러 가리고 싶으면”
+      아래 주석을 해제하고 값만 조절해.
+      (단, 그러면 ‘위쪽이 짤린다’ 현상은 의도된 동작이 됨)
+
+    :root { --hideTop: 80px; }
+
+    .video-wrapper iframe {
+      height: calc(100% + var(--hideTop));
+      transform: translateY(calc(-1 * var(--hideTop)));
+    }
+    */
   </style>
 </head>
 
 <body>
-  <div class="screen">
-    <div class="page-container">
-      <div class="main-header">AI 디지털 학습 도구 체험</div>
+  <div class="page-container">
+    <div class="main-header">AI 디지털 학습 도구 체험</div>
 
-      <div class="type-badge-row">
-        <div class="icon-box">
-          <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-        </div>
-        <div class="title-group">
-          <h2 class="type-title">시각형</h2>
-          <p class="type-desc-text">이미지, 영상, 인포그래픽 활용 학습</p>
-        </div>
+    <div class="type-badge-row">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+        </svg>
       </div>
 
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.ebs.co.kr/onAirPlayer/onair_PLUS2.html"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-        ></iframe>
+      <div class="title-group">
+        <h2 class="type-title">시각형</h2>
+        <p class="type-desc-text">이미지, 영상, 인포그래픽 활용 학습</p>
       </div>
-
-      <p class="footer-info">시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.</p>
-      <a href="index.html" class="back-btn">메인으로 돌아가기</a>
     </div>
+
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.ebs.co.kr/onAirPlayer/onair_PLUS2.html"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <p class="footer-info">
+      시각 자료는 복합적인 개념을 직관적으로 이해하도록 돕는 강력한 도구입니다.
+    </p>
+
+    <a href="index.html" class="back-btn">메인으로 돌아가기</a>
   </div>
 </body>
 </html>
