@@ -6,20 +6,56 @@
     <title>청각형 학습 체험</title>
     <style>
         * { box-sizing: border-box; }
-        html, body { margin: 0; padding: 0; width: 100%; background-color: #f8fafc; overflow-x: hidden; overflow-y: auto; }
-        body { font-family: 'Pretendard', sans-serif; display: flex; justify-content: center; align-items: flex-start; padding: 40px 15px; }
+        
+        /* 1. 스크롤 활성화: 높이를 고정하지 않고 내용에 따라 늘어나게 설정 */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            min-height: 100%; 
+            background-color: #f8fafc; 
+            overflow-x: hidden; 
+            overflow-y: auto; /* 세로 스크롤 허용 */
+            -webkit-overflow-scrolling: touch; /* 모바일 부드러운 스크롤 */
+        }
 
-        .page-container { width: 100%; max-width: 500px; background: white; padding: 25px 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; color: #333; margin-bottom: 25px; }
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+            padding: 40px 15px; 
+        }
+
+        .page-container { 
+            width: 100%; 
+            max-width: 500px; 
+            background: white; 
+            padding: 25px 20px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        }
+
+        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; margin-bottom: 25px; }
 
         .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
-        .icon-box { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .icon-box { 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 12px; 
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0; 
+        }
         .icon-box svg { width: 24px; height: 24px; fill: white; }
+        
         .title-group { display: flex; flex-direction: column; }
         .type-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
         .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
 
-        /* 청각형 Bandi 플레이어에 맞춘 상단 가리기 조절 */
+        /* 2. 영상 잘림 해결: 상단 가리기(top) 값을 -95px로 낮추어 실제 화면 보호 */
         .video-wrapper {
             position: relative;
             width: 100%;
@@ -32,23 +68,38 @@
 
         .video-wrapper iframe {
             position: absolute;
-            top: -110px; /* Bandi용 최적화 수치 */
+            top: -95px; /* 115px에서 95px로 조정하여 영상 잘림 방지 */
             left: 0;
             width: 100%;
-            height: calc(100% + 110px);
+            height: calc(100% + 95px);
             border: none;
         }
 
         .footer-info { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; }
-        .back-btn { display: block; text-align: center; text-decoration: none; color: #7aa7e5; font-weight: 700; padding: 14px; border: 2px solid #a1c4fd; border-radius: 15px; }
+        
+        .back-btn { 
+            display: block; 
+            text-align: center; 
+            text-decoration: none; 
+            color: #7aa7e5; 
+            font-weight: 700; 
+            padding: 14px; 
+            border: 2px solid #a1c4fd; 
+            border-radius: 15px; 
+        }
     </style>
 </head>
 <body>
 <div class="page-container">
     <div class="main-header">AI 디지털 학습 도구 체험</div>
     <div class="type-badge-row">
-        <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9v7c0 1.1.9 2 2 2h4v-8H5v-1c0-3.87 3.13-7 7-7s7 3.13 7 7v1h-4v8h4c1.1 0 2-.9 2-2v-7a9 9 0 0 0-9-9z"/></svg></div>
-        <div class="title-group"><h2 class="type-title">청각형</h2><p class="type-desc-text">오디오 팟캐스트, 음성 피드백 활용 학습</p></div>
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9v7c0 1.1.9 2 2 2h4v-8H5v-1c0-3.87 3.13-7 7-7s7 3.13 7 7v1h-4v8h4c1.1 0 2-.9 2-2v-7a9 9 0 0 0-9-9z"/></svg>
+        </div>
+        <div class="title-group">
+            <h2 class="type-title">청각형</h2>
+            <p class="type-desc-text">오디오 팟캐스트, 음성 피드백 활용 학습</p>
+        </div>
     </div>
     <div class="video-wrapper">
         <iframe src="https://www.ebs.co.kr/onAirPlayer/onair_bandi.html" allow="autoplay; fullscreen" allowfullscreen></iframe>
