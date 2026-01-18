@@ -11,7 +11,6 @@
             /* 혼합형 보라색 그라데이션 */
             --color-mix: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
             --text-main: #1e293b;
-            --accent-purple: #8b5cf6;
         }
 
         /* 1. 상단 잘림 방지 및 자연스러운 스크롤 설정 */
@@ -30,22 +29,22 @@
             font-family: 'Pretendard', -apple-system, sans-serif; 
             display: flex; 
             justify-content: center; 
-            align-items: flex-start; /* 상단 고정 배치 */
-            padding: calc(20px + env(safe-area-inset-top, 0px)) 15px 60px 15px; 
+            align-items: flex-start; /* 상단 고정 배치하여 잘림 방지 */
+            padding: 40px 15px 60px 15px; 
         }
 
         .page-container { 
             width: 100%; 
             max-width: 500px; 
             background: white; 
-            padding: 30px 20px; 
-            border-radius: 30px; 
+            padding: 25px 20px; 
+            border-radius: 25px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
 
-        .main-header { text-align: center; font-size: 1.1rem; font-weight: 800; color: #333; margin-bottom: 25px; }
+        .main-header { text-align: center; font-size: 1.15rem; font-weight: 800; color: #333; margin-bottom: 25px; }
 
-        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
+        .type-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
         
         .icon-box { 
             width: 45px; 
@@ -60,68 +59,55 @@
         .icon-box svg { width: 24px; height: 24px; fill: white; }
         
         .title-group { display: flex; flex-direction: column; }
-        .type-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin: 0; }
-        .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 3px 0 0 0; }
+        .type-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
+        .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
 
-        /* 혼합형 학습 섹션 스타일 */
-        .content-card {
-            background: #fdfbff;
-            border: 1px solid #f3e8ff;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            background: var(--accent-purple);
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .section-title { font-size: 1.05rem; font-weight: 700; color: #4c1d95; margin-bottom: 10px; }
-        .section-text { font-size: 0.9rem; color: #4b5563; line-height: 1.6; margin: 0; }
-
-        /* 인터랙티브 퀴즈 영역 */
-        .quiz-container { margin-top: 15px; }
-        .quiz-option {
+        /* 2. 인터랙티브 콘텐츠 영역 (사이언스올 최적화) */
+        .content-wrapper {
+            position: relative;
             width: 100%;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: 1.5px solid #e9d5ff;
-            border-radius: 12px;
-            background: white;
-            text-align: left;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            /* 콘텐츠 조작을 위해 세로 비율을 넉넉하게 설정 */
+            aspect-ratio: 16 / 12; 
+            border-radius: 15px;
+            overflow: hidden; 
+            background: #000;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
         }
-        .quiz-option:active { transform: scale(0.98); }
-        .quiz-option.correct { background: #f0fdf4; border-color: #4ade80; color: #166534; }
-        .quiz-option.wrong { background: #fef2f2; border-color: #fca5a1; color: #991b1b; }
 
-        .result-msg { font-size: 0.9rem; font-weight: 700; text-align: center; margin-top: 10px; display: none; }
+        .content-wrapper iframe {
+            position: absolute;
+            /* 상단 메뉴가 잘리지 않도록 가리는 값을 -40px로 조정 */
+            top: -40px; 
+            left: 0;
+            width: 100%;
+            height: calc(100% + 40px);
+            border: none;
+        }
 
+        .footer-info { 
+            font-size: 0.88rem; 
+            color: #94a3b8; 
+            line-height: 1.5; 
+            margin-bottom: 25px; 
+        }
+        
         .back-btn { 
             display: block; 
             text-align: center; 
             text-decoration: none; 
             color: #8b5cf6; 
             font-weight: 700; 
-            padding: 15px; 
-            border: 2.5px solid #ddd6fe; 
-            border-radius: 18px; 
-            margin-top: 20px;
+            padding: 14px; 
+            border: 2px solid #ddd6fe; 
+            border-radius: 15px; 
+            transition: 0.2s;
         }
+        .back-btn:hover { background: #f5f3ff; }
     </style>
 </head>
 <body>
-
 <div class="page-container">
     <div class="main-header">AI 디지털 학습 도구 체험</div>
 
@@ -131,65 +117,19 @@
         </div>
         <div class="title-group">
             <h2 class="type-title">혼합형</h2>
-            <p class="type-desc-text">다양한 방식을 결합한 맞춤형 학습</p>
+            <p class="type-desc-text">시각, 청각, 체험의 복합 학습 경험</p>
         </div>
     </div>
 
-    <div class="content-card">
-        <span class="section-tag">LEARN</span>
-        <h3 class="section-title">혼합형 학습이란?</h3>
-        <p class="section-text">
-            단순히 동영상을 보는 것을 넘어, 데이터 시각화 자료를 분석하고 퀴즈를 통해 피드백을 즉시 받는 능동적인 학습 형태입니다. AI는 사용자의 수준에 맞춰 컨텐츠의 난이도를 실시간으로 조절합니다.
-        </p>
+    <div class="content-wrapper">
+        <iframe src="https://www.scienceall.com/jnrepo/uploads//new/activity/12_035/index.html" allowfullscreen></iframe>
     </div>
 
-    <div class="content-card">
-        <span class="section-tag">QUIZ</span>
-        <h3 class="section-title">학습 확인 문제</h3>
-        <p class="section-text" style="margin-bottom: 15px;">Q. 혼합형 학습의 가장 큰 장점은 무엇일까요?</p>
-        <div class="quiz-container">
-            <button class="quiz-option" onclick="handleQuiz(this, false)">단순한 반복 학습이 가능하다</button>
-            <button class="quiz-option" onclick="handleQuiz(this, true)">다양한 감각을 활용해 효율을 높인다</button>
-            <button class="quiz-option" onclick="handleQuiz(this, false)">전통적인 서적 학습만 고집한다</button>
-        </div>
-        <div id="result" class="result-msg"></div>
-    </div>
-
+    <p class="footer-info">
+        텍스트와 영상, 그리고 직접 조작하는 시뮬레이션이 결합된 혼합형 콘텐츠는 개념을 가장 입체적으로 이해할 수 있게 합니다.
+    </p>
+    
     <a href="index.html" class="back-btn">메인으로 돌아가기</a>
 </div>
-
-<script>
-    function handleQuiz(btn, isCorrect) {
-        // 모든 옵션 초기화
-        const options = document.querySelectorAll('.quiz-option');
-        options.forEach(opt => {
-            opt.classList.remove('correct', 'wrong');
-            opt.disabled = true;
-        });
-
-        const resultMsg = document.getElementById('result');
-        resultMsg.style.display = 'block';
-
-        if(isCorrect) {
-            btn.classList.add('correct');
-            resultMsg.innerHTML = "✅ 정답입니다! 다양한 방식이 몰입감을 높여요.";
-            resultMsg.style.color = "#16a34a";
-        } else {
-            btn.classList.add('wrong');
-            resultMsg.innerHTML = "❌ 오답입니다. 다시 한번 읽어보세요!";
-            resultMsg.style.color = "#dc2626";
-            
-            // 1.5초 후 다시 시도 가능하게 리셋
-            setTimeout(() => {
-                options.forEach(opt => {
-                    opt.classList.remove('wrong');
-                    opt.disabled = false;
-                });
-                resultMsg.style.display = 'none';
-            }, 1500);
-        }
-    }
-</script>
-
 </body>
 </html>
