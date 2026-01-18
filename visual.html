@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>시각형 학습 체험</title>
     <style>
         * { box-sizing: border-box; }
@@ -12,27 +12,27 @@
             --text-main: #1e293b;
         }
 
-        /* 1. 스크롤 봉인 해제: 넘칠 경우 스크롤이 생기도록 설정 */
+        /* 1. 상단 잘림 방지 핵심: height를 고정하지 않고 최소 높이만 설정 */
         html, body { 
-            min-height: 100%;
+            min-height: 100dvh; 
             margin: 0; 
             padding: 0; 
             background-color: #f8fafc;
-            /* 가로 스크롤은 막고 세로 스크롤만 허용 */
             overflow-x: hidden;
-            overflow-y: auto; 
+            overflow-y: auto; /* 내용이 많으면 자연스럽게 스크롤 허용 */
         }
 
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
-            /* 상단 잘림 방지: 위아래 여백을 주어 여유있게 배치 */
-            padding: 20px 0;
+            /* 2. 중앙 정렬 대신 위에서부터 배치하여 상단 잘림 원천 차단 */
+            align-items: flex-start; 
+            padding: env(safe-area-inset-top, 20px) 15px 40px 15px; 
         }
 
         .page-container {
-            width: 92%;
+            width: 100%;
             max-width: 500px;
             background: white;
             padding: 25px 20px;
@@ -40,8 +40,8 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            /* 화면 중앙 배치를 유지하되 스크롤 가능하게 마진 조정 */
-            margin: auto 15px;
+            /* 위쪽 여백을 고정하여 절대 잘리지 않게 함 */
+            margin-top: 10px;
         }
 
         .main-header {
@@ -76,7 +76,7 @@
         .type-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
         .type-desc-text { font-size: 0.85rem; color: #64748b; margin: 2px 0 0 0; }
 
-        /* 2. 영상 영역: 여백을 최소화하면서 비율 유지 */
+        /* 영상 영역: 상단 버튼 가리기 기법 유지 */
         .video-clip-wrapper {
             position: relative;
             width: 100%;
@@ -89,7 +89,7 @@
 
         .video-clip-wrapper iframe {
             position: absolute;
-            top: -128px; /* EBS 상단 버튼 가리기 */
+            top: -128px; 
             left: 0;
             width: 100%;
             height: calc(100% + 128px);
@@ -117,12 +117,6 @@
         }
 
         .back-btn:hover { background: #ff9a9e; color: white; }
-
-        /* 화면 높이가 아주 낮은 폰을 위한 대응 */
-        @media (max-height: 600px) {
-            .page-container { margin: 10px auto; }
-            .main-header { margin-bottom: 10px; }
-        }
     </style>
 </head>
 <body>
